@@ -1,37 +1,67 @@
 html {
-  height: 100%;
-  width: 100%;
-  font-family: "Titillium Web", sans-serif;
+	height: 100%;
+	width: 100%;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 62.5%;
 }
 
 body {
-  min-height: 100%;
-  min-width: 100%;
-  background: linear-gradient(pink, violet);
-}
-
-button {
-  font-size: 7px;
+	min-height: 100%;
+	min-width: 100%;
+	background: linear-gradient(pink, violet);
+	font-size: 1.6rem;
 }
 
 #main-content {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border: 1px solid #333;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 15px 20px 18px 18px;
-  border-radius: 5px;
-  box-shadow: 2px 5px 5px #333;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	border: 1px solid #333;
+	background: rgba(255, 255, 255, 0.3);
+	padding: 15px 20px 18px 18px;
+	border-radius: 5px;
+	box-shadow: 2px 5px 5px #333;
 }
 
-#list {
-  margin: 10px;
-  border: 1px solid #333;
-  background: rgba(255, 255, 255, 0.75);
-  padding: 15px 20px 18px 18px;
-  border-radius: 5px;
-  box-shadow: 2px 5px 5px #333;
+.list {
+	margin: 10px;
+	border: 1px solid #333;
+	background: rgba(255, 255, 255, 0.75);
+	padding: 15px 20px 18px 18px;
+	border-radius: 5px;
+	box-shadow: 2px 5px 5px #333;
+	display: grid;
+	width: 80vw;
+	grid-template-columns: 1fr 1rem 1fr 1rem 1fr;
+}
+
+[list] {
+	width: 6rem;
+}
+
+.list > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.list > div > div > div {
+	display: flex;
+	gap: 2rem;
+	align-items: center;
+}
+
+.list img {
+	width: 1.6rem;
+}
+
+.divider {
+	width: 1px;
+	height: calc(100% - 5rem);
+	position: relative;
+	top: 4rem;
+	background-color: #333;
+	flex: 0 0 auto;
 }
