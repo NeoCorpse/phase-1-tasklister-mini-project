@@ -1,67 +1,132 @@
-html {
-	height: 100%;
-	width: 100%;
-	font-family: 'Titillium Web', sans-serif;
-	font-size: 62.5%;
+:root {
+	--black: #252525;
+	--white: #f7f7f7;
+	--purple: #6c63ff;
 }
 
 body {
-	min-height: 100%;
-	min-width: 100%;
-	background: linear-gradient(pink, violet);
-	font-size: 1.6rem;
+	background-color: var(--black);
+	color: var(--white);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 4rem;
+	gap: 4rem;
 }
 
-#main-content {
-	position: relative;
+main {
+	width: 75rem;
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	flex-direction: column;
-	border: 1px solid #333;
-	background: rgba(255, 255, 255, 0.3);
-	padding: 15px 20px 18px 18px;
-	border-radius: 5px;
-	box-shadow: 2px 5px 5px #333;
+	/* align-items: center; */
+	gap: 4rem;
+}
+
+form {
+	/* align-self: stretch; */
+	display: flex;
+	gap: 0.6rem;
+	margin: 0 auto;
+}
+
+label {
+	font-size: 1.8rem;
+}
+
+input[type='submit'] {
+	padding: 0 0.4rem;
+}
+#new-task-description {
+	width: 36rem;
+}
+h1 {
+	font-size: 4.1rem;
+}
+
+.low {
+	color: hsl(120, 100%, 50%);
+}
+
+.medium {
+	color: hsl(60, 100%, 50%);
+}
+
+.high {
+	color: hsl(0, 100%, 50%);
 }
 
 #tasks {
-	margin: 10px;
-	border: 1px solid #333;
-	background: rgba(255, 255, 255, 0.75);
-	padding: 15px 20px 18px 18px;
-	border-radius: 5px;
-	box-shadow: 2px 5px 5px #333;
-	display: grid;
-	width: 80vw;
-	grid-template-columns: 1fr 1rem 1fr 1rem 1fr;
-}
-
-[list] {
-	width: 6rem;
-}
-
-#tasks > div {
 	display: flex;
 	flex-direction: column;
+	gap: 1.8rem;
 	align-items: center;
 }
-
-#tasks > div > div > div {
-	display: flex;
-	gap: 2rem;
-	align-items: center;
-}
-
-#tasks img {
-	width: 1.6rem;
-}
-
-.divider {
-	width: 1px;
-	height: calc(100% - 5rem);
+.task {
 	position: relative;
-	top: 4rem;
-	background-color: #333;
-	flex: 0 0 auto;
+	display: flex;
+	font-size: 1.8rem;
+	justify-content: flex-start;
+	gap: 1rem;
+	width: 75%;
 }
+
+.divider:not(:last-child) {
+	width: 77%;
+	height: 1px;
+	background-color: var(--purple);
+	bottom: 0;
+	left: 0;
+}
+
+.edit {
+	background-image: url('./assets/edit-svgrepo-com.svg');
+}
+
+.delete {
+	background-image: url('./assets/trash-bin-minimalistic-svgrepo-com.svg');
+}
+
+.buttons {
+	display: flex;
+	gap: 0.9rem;
+	margin-left: auto;
+}
+
+.edit,
+.delete {
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+}
+
+#tasks label {
+	display: grid;
+	grid-template-columns: 1em auto;
+	gap: 0.5em;
+	transition: text-decoration 1s;
+}
+
+#tasks label:has(> [type='checkbox']:checked) {
+	text-decoration: line-through;
+	filter: brightness(75%);
+}
+
+/* input[type='checkbox'] {
+	position: relative;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	cursor: pointer;
+}
+
+input[type='checkbox']:before {
+	position: absolute;
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid var(--purple);
+	top: 0;
+	left: 0;
+} */

@@ -3,20 +3,18 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Flatiron Task Lister</title>
+		<link rel="stylesheet" href="./reset/mordern-normalize.css" />
+		<link rel="stylesheet" href="./reset/custom-reset.css" />
 		<link rel="stylesheet" href="./style.css" />
+		<script defer src="./src/index.js"></script>
 	</head>
 	<body>
-		<div id="main-content">
-			<h1>Task Lister Lite™️</h1>
+		<h1>TASK LISTER</h1>
 
+		<main>
 			<form id="create-task-form" action="" method="POST">
-				<label for="new-task-description">Task description:</label>
+				<label for="new-task-description">Task :</label>
 				<input type="text" id="new-task-description" name="new-task-description" placeholder="Add a task..." />
-				<select name="status" id="status">
-					<option value="completed">Completed</option>
-					<option value="in-progress">In progress</option>
-					<option value="to-do" selected="selected">To-do</option>
-				</select>
 				<select name="priorities" id="priorities">
 					<option value="low" selected="selected">Low</option>
 					<option value="medium">Medium</option>
@@ -24,26 +22,32 @@
 				</select>
 				<input type="submit" value="Add" />
 			</form>
-
 			<div id="tasks">
-				<div class="completed">
-					<h3>Completed</h3>
-					<div></div>
+				<div class="task low">
+					<label> <input type="checkbox" />Task #1</label>
+					<div class="buttons">
+						<div class="edit"></div>
+						<div class="delete"></div>
+					</div>
 				</div>
 				<div class="divider"></div>
-
-				<div class="in-progress">
-					<h3>In progress</h3>
-					<div></div>
+				<div class="task medium">
+					<label> <input type="checkbox" />Task #2</label>
+					<div class="buttons">
+						<div class="edit"></div>
+						<div class="delete"></div>
+					</div>
 				</div>
 				<div class="divider"></div>
-				<div class="to-do">
-					<h3>To-do</h3>
-					<div></div>
+				<div class="task high">
+					<label> <input type="checkbox" />Task #3</label>
+					<div class="buttons">
+						<div class="edit"></div>
+						<div class="delete"></div>
+					</div>
 				</div>
+				<div class="divider"></div>
 			</div>
-		</div>
-
-		<script src="./src/index.js"></script>
+		</main>
 	</body>
 </html>
