@@ -6,11 +6,12 @@ const divider = document.createElement('div');
 divider.classList.add('divider');
 const clearBtn = document.querySelector('.clear');
 
+// Sets taskArray to locally stored data or an empty array if there is no stored data
+const tasksArray = JSON.parse(localStorage.getItem('tasks')) || [];
+
 // Updates DOM if there is data in local storage
 if (localStorage.getItem('tasks')) updateDOMTasks();
 
-// Sets taskArray to locally stored data or an empty array if there is no stored data
-const tasksArray = JSON.parse(localStorage.getItem('tasks')) || [];
 class Task {
 	constructor(name, priority, val) {
 		this.name = name;
@@ -20,18 +21,22 @@ class Task {
 }
 
 form.addEventListener('submit', (e) => {
-	e.preventDefault();
-	const name = document.querySelector('input').value;
-	if (name === '') return;
+	try {
+		e.preventDefault();
+		const name = document.querySelector('input').value;
+		if (name === '') return;
 
-	// Sets priority value to task for sorting
-	let val = priority.value === 'low' ? 1 : priority.value === 'medium' ? 2 : 3;
-	const task = new Task(name, priority.value, val);
+		// Sets priority value to task for sorting
+		let val = priority.value === 'low' ? 1 : priority.value === 'medium' ? 2 : 3;
+		const task = new Task(name, priority.value, val);
 
-	tasksArray.unshift(task);
-	updateDOMTasks();
+		tasksArray.unshift(task);
+		updateDOMTasks();
 
-	input.value = '';
+		input.value = '';
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 clearBtn.addEventListener('click', clear);
