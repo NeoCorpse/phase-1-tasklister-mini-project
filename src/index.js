@@ -1,67 +1,94 @@
-document.addEventListener('DOMContentLoaded', () => {
-	// your code here
-	class Task {
-		constructor(name, priority, status) {
-			this.name = name;
-			this._priority = priority;
-			this._status = status;
-		}
+const form = document.querySelector('form');
+const input = form.querySelector('input');
+const priority = document.querySelector('select');
+const tasksElement = document.querySelector('#tasks');
+const divider = document.createElement('div');
+divider.classList.add('divider');
+const clearBtn = document.querySelector('.clear');
 
-		set status(val) {
-			this._status = val;
-		}
+// Updates DOM if there is data in local storage
+if (localStorage.getItem('tasks')) updateDOMTasks();
 
-		get status() {
-			return this._status;
-		}
-
-		set priority(val) {
-			this._priority = val;
-		}
-
-		get priority() {
-			return this._priority;
-		}
+// Sets taskArray to locally stored data or an empty array if there is no stored data
+const tasksArray = JSON.parse(localStorage.getItem('tasks')) || [];
+class Task {
+	constructor(name, priority, val) {
+		this.name = name;
+		this.priority = priority;
+		this.val = val;
 	}
+}
 
-	const form = document.querySelector('form');
-	const input = form.querySelector('input');
-	const completed = document.querySelector('.completed > div');
-	const inProgress = document.querySelector('.in-progress > div');
-	const toDo = document.querySelector('.to-do > div');
+form.addEventListener('submit', (e) => {
+	e.preventDefault();
+	const name = document.querySelector('input').value;
+	if (name === '') return;
 
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
-		const name = document.querySelector('input').value;
-		let [status, priority] = [...document.querySelectorAll('select')];
-		status = status.value;
-		priority = priority.value;
-		const task = new Task(name, priority, status);
+	// Sets priority value to task for sorting
+	let val = priority.value === 'low' ? 1 : priority.value === 'medium' ? 2 : 3;
+	const task = new Task(name, priority.value, val);
 
-		const div = document.createElement('div');
-		console.log(task);
-		div.innerHTML = `<img src="./assets/${task.priority}.svg" alt="${task.priority}" />
-							<p>${task.name}</p>
-							<button>x</button>`;
+	tasksArray.unshift(task);
+	updateDOMTasks();
 
-		div.querySelector('button').addEventListener('click', (e) => {
-			e.target.parentNode.remove();
-		});
-
-		render(div, task);
-		input.value = '';
-	});
-
-	function render(div, task) {
-		switch (task.status) {
-			case 'to-do':
-				toDo.appendChild(div);
-				break;
-			case 'in-progress':
-				inProgress.appendChild(div);
-				break;
-			case 'completed':
-				completed.appendChild(div);
-		}
-	}
+	input.value = '';
 });
+
+clearBtn.addEventListener('click', clear);
+
+// Event listener for delete and edit buttons
+tasksElement.addEventListener('click', (e) => {
+	if (e.target.classList.contains('delete')) deleteFunc(e);
+	if (e.target.classList.contains('edit')) editFunc(e);
+});
+
+function updateDOMTasks() {
+	tasksElement.replaceChildren();
+	let i = 0;
+	sortFunc();
+	tasksArray.forEach((task) => {
+		tasksElement.innerHTML += `<div class="task ${task.priority}" data-item="${i}">
+		<label> <input type="checkbox" />${task.name}</label>
+		<div class="buttons">
+			<div class="edit"></div>
+			<div class="delete"></div>
+		</div>
+		</div>`;
+		tasksElement.appendChild(divider);
+		i++;
+	});
+}
+
+function editFunc(e) {
+	let parent = e.target.parentNode.parentNode;
+	let dataItem = parent.getAttribute('data-item');
+	let initial = parent.querySelector('label').textContent;
+	let newVal = prompt('Input the new value', `${initial}`);
+	if (newVal === '') {
+		alert('Task cannot be empty');
+		return;
+	}
+	tasksArray[dataItem].name = newVal;
+	parent.querySelector('label').innerHTML = `<input type="checkbox" />${newVal}`;
+	localStorage.setItem('tasks', JSON.stringify(tasksArray));
+}
+
+function deleteFunc(e) {
+	let parent = e.target.parentNode.parentNode;
+	let dataItem = parent.getAttribute('data-item');
+	tasksArray.splice(dataItem, 1);
+	localStorage.setItem('tasks', JSON.stringify(tasksArray));
+	parent.nextElementSibling.remove();
+	parent.remove();
+}
+
+function sortFunc() {
+	tasksArray.sort((a, b) => b.val - a.val);
+	localStorage.setItem('tasks', JSON.stringify(tasksArray));
+}
+
+function clear() {
+	localStorage.clear();
+	tasksElement.replaceChildren();
+	tasksArray.length = 0;
+}
